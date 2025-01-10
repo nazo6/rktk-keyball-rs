@@ -4,8 +4,8 @@
     "cols": 14,
     "rows": 5,
 
-    "right_led_count": 34,
-    "left_led_count": 37,
+    "right_rgb_count": 34,
+    "left_rgb_count": 37,
 
     "name": "keyball61",
     "layout": {
