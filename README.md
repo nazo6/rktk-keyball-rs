@@ -9,6 +9,11 @@ ProMicroでは動かないので注意してください。
 Proでの動作は現状確認していません。
 ピンの設定を適切に変更すれば動作するはずですが、本ファームウェアでは過去フラッシュの書き込みにバグがあり書き換えてはいけない領域を書き換えてブートローダが起動しなくなることがあったため自己責任でお願いします。
 
+## 昔のコード
+
+[Zennの記事](https://zenn.dev/nazo6/articles/keyball-embassy-rp2040)で紹介した際の`keyball-rs`のコードは[`legacy`ブランチ](https://github.com/nazo6/keyball-rs/tree/legacy)にあります。
+このコードをライブラリ化したものがrktkです。
+
 ## 機能
 
 詳しくは[rktkのページ](https://github.com/nazo6/rktk)を参照してください。キーマップについてはQMKの機能のメジャーな所は大体実装してありますが、ディスプレイ、バックライトなどは現状カスタマイズすることができません。
@@ -18,7 +23,7 @@ Proでの動作は現状確認していません。
 - 左右間の通信が安定しない
 - フラッシュの書き込み・読み込みがうまくいかないことがある
 
-## ビルド
+## ビルド(RP2040)
 
 ### 依存
 
@@ -30,7 +35,6 @@ Proでの動作は現状確認していません。
 - [rktk-cli](https://github.com/nazo6/rktk):
   `cargo +nightly install --git https://github.com/nazo6/rktk rktk-cli`
 - arm-none-eabi-objcopy (uf2生成に必要)
-- Python (uf2生成に必要)
 
 ### 手順
 
@@ -45,7 +49,7 @@ Proでの動作は現状確認していません。
    git clone https://github.com/nazo6/rktk
    ```
 
-3. ビルドするディレクトリに移動してビルドします。`cargo build -p`は機能しないので注意してください。
+3. ビルドするディレクトリに移動してビルドします。
    ```bash
    cd keyball-rs/keyball61/keyball61-rp2040
    rktk-cli build
@@ -63,9 +67,4 @@ Proでの動作は現状確認していません。
 
 rktkは上のようにソースコードでキーを変更する以外にも、以下のWebアプリを使うことでキーマップや設定を変更することができます。
 
-https://rrpc.nazo6.dev/
-
-## 昔のコード
-
-[Zennの記事](https://zenn.dev/nazo6/articles/keyball-embassy-rp2040)で紹介した際の`keyball-rs`のコードは[`legacy`ブランチ](https://github.com/nazo6/keyball-rs/tree/legacy)にあります。
-このコードをライブラリ化したものがrktkです。
+https://rktk-client.nazo6.dev/
