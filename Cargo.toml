@@ -25,26 +25,24 @@ rktk-drivers-common = { path = "../rktk/lib/rktk-drivers-common" }
 rktk-drivers-nrf = { path = "../rktk/lib/rktk-drivers-nrf" }
 rktk-drivers-rp = { path = "../rktk/lib/rktk-drivers-rp" }
 
-embassy-executor = { version = "0.6.1", features = [
+embassy-executor = { version = "0.7.0", features = [
   "arch-cortex-m",
   "executor-thread",
   "executor-interrupt",
-  "integrated-timers",
   "task-arena-size-65536",
   # "nightly",
 ] }
-embassy-time = { version = "0.3.2" }
+embassy-time = { version = "0.4.0" }
 embassy-sync = { version = "0.6.0" }
-embedded-alloc = "0.6.0"
-embassy-embedded-hal = { version = "0.2.0" }
+embassy-embedded-hal = { version = "0.3.0" }
 
-embassy-rp = { version = "0.2.0", features = [
+embassy-rp = { version = "0.3.0", features = [
   "unstable-pac",
   "time-driver",
   "critical-section-impl",
 ] }
 
-embassy-nrf = { version = "0.2.0", features = [
+embassy-nrf = { version = "0.3.0", features = [
   "gpiote",
   "time-driver-rtc1",
   "nrf52840",
