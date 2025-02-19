@@ -84,7 +84,7 @@ async fn main(_spawner: Spawner) {
             RpFlexPin::new(p.PIN_26),
         ],
         HandDetector::ByKey(2, 6),
-        true,
+        Some(rktk_drivers_common::keyscan::duplex_matrix::OutputWait::Pin),
         translate_key_position,
     );
 

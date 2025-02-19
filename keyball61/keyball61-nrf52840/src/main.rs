@@ -117,7 +117,7 @@ async fn main(_spawner: Spawner) {
             NrfFlexPin::new(p.P1_15), // COL3
         ],
         HandDetector::Constant(rktk::drivers::interface::keyscan::Hand::Left),
-        false,
+        None,
         translate_key_position,
     );
 
@@ -133,7 +133,7 @@ async fn main(_spawner: Spawner) {
 
     let rgb = Ws2812Pwm::new(p.PWM0, p.P0_09);
 
-    let sd = rktk_drivers_nrf::softdevice::init_sd("keyball61");
+    let sd = rktk_drivers_nrf::softdevice::init_softdevice("keyball61");
 
     #[cfg(feature = "ble")]
     let server = ble::init_ble_server(
@@ -144,8 +144,7 @@ async fn main(_spawner: Spawner) {
             serial_number: Some("100"),
             ..Default::default()
         },
-    )
-    .await;
+    );
 
     rktk_drivers_nrf::softdevice::start_softdevice(sd).await;
 
@@ -158,7 +157,12 @@ async fn main(_spawner: Spawner) {
 
     let ble_builder = {
         #[cfg(feature = "ble")]
-        let ble = Some(ble::NrfBleDriverBuilder::new(sd, server, "keyball61", flash).await);
+        let ble = Some(ble::NrfBleDriverBuilder::new(
+            sd,
+            server,
+            "keyball61",
+            flash,
+        ));
 
         #[cfg(not(feature = "ble"))]
         let ble = none_driver!(BleBuilder);
