@@ -110,7 +110,7 @@ async fn main(_spawner: Spawner) {
     )
     .await
     .unwrap();
-    let keyscan = DuplexMatrixScanner::<_, _, 5, 4, 7, 5>::new(
+    let keyscan = DuplexMatrixScanner::<_, _, 5, 4, 5, 7>::new(
         [
             NrfFlexPin::new(p.P0_22), // ROW0
             NrfFlexPin::new(p.P0_24), // ROW1
