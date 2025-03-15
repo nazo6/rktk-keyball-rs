@@ -1633,6 +1633,7 @@ dependencies = [
 [[package]]
 name = "rktk"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "const-gen",
  "defmt",
@@ -1664,6 +1665,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-common"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "critical-section",
  "defmt",
@@ -1690,6 +1692,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-nrf"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "atomic-pool",
  "bitvec",
@@ -1722,6 +1725,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-rp"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "defmt",
  "display-interface",
@@ -1748,6 +1752,7 @@ dependencies = [
 [[package]]
 name = "rktk-keymanager"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "defmt",
  "document-features",
@@ -1764,6 +1769,7 @@ dependencies = [
 [[package]]
 name = "rktk-log"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "defmt",
  "rktk-log-macros",
@@ -1772,6 +1778,7 @@ dependencies = [
 [[package]]
 name = "rktk-log-macros"
 version = "0.1.0"
+source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
 dependencies = [
  "proc-macro2",
  "quote",

@@ -19,10 +19,10 @@ repository = "https://github.com/nazo6/keyball-rs"
 [workspace.dependencies]
 keyball-common = { path = "keyball-common" }
 
-rktk = { path = "../rktk/lib/rktk" }
-rktk-drivers-common = { path = "../rktk/lib/rktk-drivers-common" }
-rktk-drivers-nrf = { path = "../rktk/lib/rktk-drivers-nrf" }
-rktk-drivers-rp = { path = "../rktk/lib/rktk-drivers-rp" }
+rktk = { version = "0.1.0" }
+rktk-drivers-common = { version = "0.1.0" }
+rktk-drivers-nrf = { version = "0.1.0" }
+rktk-drivers-rp = { version = "0.1.0" }
 
 embassy-executor = { version = "0.7.0", features = [
   "arch-cortex-m",
@@ -43,3 +43,9 @@ ssd1306 = { version = "0.9.0" }
 once_cell = { version = "1.20.2", default-features = false, features = [
   "atomic-polyfill",
 ] }
+
+[patch.crates-io]
+rktk = { git = 'https://github.com/nazo6/rktk' }
+rktk-drivers-common = { git = 'https://github.com/nazo6/rktk' }
+rktk-drivers-nrf = { git = 'https://github.com/nazo6/rktk' }
+rktk-drivers-rp = { git = 'https://github.com/nazo6/rktk' }
