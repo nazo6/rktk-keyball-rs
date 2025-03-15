@@ -3,15 +3,10 @@
   "keyboard": {
     "cols": 14,
     "rows": 5,
-
     "right_rgb_count": 34,
     "left_rgb_count": 37,
-
     "name": "keyball61",
     "layout": {
-      "labels": [
-        ["Ball availability", "Right", "Left"]
-      ],
       "keymap": [
         [{ "x": 3 }, "0,3", { "x": 8.5 }, "0,10"],
         [{ "y": -0.875, "x": 4 }, "0,4", { "x": 6.5 }, "0,9"],
@@ -173,6 +168,7 @@
     "scan_interval_keyboard": 10,
     "scan_interval_mouse": 5,
     "split_usb_timeout": 10000,
-    "double_tap_threshold": 500
+    "double_tap_threshold": 500,
+    "swap_mouse_x_y": true
   }
 }

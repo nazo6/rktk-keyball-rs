@@ -6,7 +6,7 @@ use core::panic::PanicInfo;
 use embassy_embedded_hal::shared_bus::asynch::spi::SpiDevice;
 use embassy_executor::Spawner;
 use embassy_nrf::{
-    gpio::{Output, Pin},
+    gpio::{Input, Level, Output, OutputDrive, Pin, Pull},
     interrupt::{self, InterruptExt, Priority},
     peripherals::SPI2,
     ppi::Group,
@@ -21,7 +21,7 @@ use rktk::{drivers::Drivers, hooks::create_empty_hooks, none_driver};
 use rktk_drivers_common::{
     debounce::EagerDebounceDriver,
     display::ssd1306::Ssd1306DisplayBuilder,
-    keyscan::{duplex_matrix::DuplexMatrixScanner, HandDetector},
+    keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
     mouse::pmw3360::Pmw3360Builder,
     panic_utils,
 };
@@ -62,7 +62,7 @@ async fn main(_spawner: Spawner) {
     let mut config = embassy_nrf::config::Config::default();
     config.gpiote_interrupt_priority = Priority::P2;
     config.time_interrupt_priority = Priority::P2;
-    let p = embassy_nrf::init(config);
+    let mut p = embassy_nrf::init(config);
 
     interrupt::USBD.set_priority(Priority::P2);
     interrupt::SPI2.set_priority(Priority::P2);
@@ -102,7 +102,15 @@ async fn main(_spawner: Spawner) {
     );
     let ball = Pmw3360Builder::new(ball_spi_device);
 
-    let keyscan = DuplexMatrixScanner::<_, 5, 4, 7, 5>::new(
+    let hand = detect_hand_from_matrix(
+        Output::new(&mut p.P1_00, Level::Low, OutputDrive::Standard),
+        Input::new(&mut p.P1_15, Pull::Down),
+        None,
+        None,
+    )
+    .await
+    .unwrap();
+    let keyscan = DuplexMatrixScanner::<_, _, 5, 4, 7, 5>::new(
         [
             NrfFlexPin::new(p.P0_22), // ROW0
             NrfFlexPin::new(p.P0_24), // ROW1
@@ -116,9 +124,8 @@ async fn main(_spawner: Spawner) {
             NrfFlexPin::new(p.P0_02), // COL2
             NrfFlexPin::new(p.P1_15), // COL3
         ],
-        HandDetector::Constant(rktk::drivers::interface::keyscan::Hand::Left),
         None,
-        translate_key_position,
+        translate_key_position(hand),
     );
 
     let split = UartHalfDuplexSplitDriver::new(
@@ -205,7 +212,7 @@ async fn main(_spawner: Spawner) {
         encoder: none_driver!(Encoder),
     };
 
-    rktk::task::start(drivers, keymap::KEYMAP, create_empty_hooks()).await;
+    rktk::task::start(drivers, keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
 }
 
 #[panic_handler]

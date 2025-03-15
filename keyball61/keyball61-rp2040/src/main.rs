@@ -7,7 +7,7 @@ use embassy_embedded_hal::shared_bus::asynch::spi::SpiDevice;
 use embassy_executor::Spawner;
 use embassy_rp::{
     bind_interrupts,
-    gpio::Output,
+    gpio::{Input, Level, Output},
     i2c::I2c,
     peripherals::{I2C1, PIO0, PIO1, USB},
     pio::Pio,
@@ -17,13 +17,13 @@ use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use rktk::{drivers::Drivers, hooks::create_empty_hooks, none_driver};
 use rktk_drivers_common::{
     display::ssd1306::Ssd1306DisplayBuilder,
-    keyscan::{duplex_matrix::DuplexMatrixScanner, HandDetector},
-    mouse::paw3395::Paw3395Builder,
+    keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
+    mouse::pmw3360::Pmw3360Builder,
     panic_utils,
     usb::{CommonUsbDriverBuilder, UsbOpts},
 };
 use rktk_drivers_rp::{
-    keyscan::flex_pin::RpFlexPin, mouse::paw3395, rgb::ws2812_pio::Ws2812Pio,
+    keyscan::flex_pin::RpFlexPin, mouse::pmw3360, rgb::ws2812_pio::Ws2812Pio,
     split::pio_half_duplex::PioHalfDuplexSplitDriver,
 };
 
@@ -40,7 +40,7 @@ bind_interrupts!(pub struct Irqs {
 async fn main(_spawner: Spawner) {
     let mut cfg = embassy_rp::config::Config::default();
     cfg.clocks.sys_clk.div_int = 2;
-    let p = embassy_rp::init(cfg);
+    let mut p = embassy_rp::init(cfg);
 
     let display = Ssd1306DisplayBuilder::new(
         I2c::new_async(
@@ -64,12 +64,20 @@ async fn main(_spawner: Spawner) {
         p.PIN_20,
         p.DMA_CH0,
         p.DMA_CH1,
-        paw3395::recommended_spi_config(),
+        pmw3360::recommended_spi_config(),
     ));
     let ball_spi = SpiDevice::new(&spi, Output::new(p.PIN_21, embassy_rp::gpio::Level::High));
-    let ball = Paw3395Builder::new(ball_spi, PAW3395_CONFIG);
+    let ball = Pmw3360Builder::new(ball_spi);
 
-    let keyscan = DuplexMatrixScanner::<_, 5, 4, 7, 5>::new(
+    let hand = detect_hand_from_matrix(
+        Output::new(&mut p.PIN_6, Level::Low),
+        Input::new(&mut p.PIN_26, embassy_rp::gpio::Pull::Down),
+        None,
+        None,
+    )
+    .await
+    .unwrap();
+    let keyscan = DuplexMatrixScanner::<_, _, 5, 4, 5, 7>::new(
         [
             RpFlexPin::new(p.PIN_4),
             RpFlexPin::new(p.PIN_5),
@@ -83,9 +91,8 @@ async fn main(_spawner: Spawner) {
             RpFlexPin::new(p.PIN_27),
             RpFlexPin::new(p.PIN_26),
         ],
-        HandDetector::ByKey(2, 6),
         Some(rktk_drivers_common::keyscan::duplex_matrix::OutputWait::Pin),
-        translate_key_position,
+        translate_key_position(hand),
     );
 
     let usb = {
@@ -126,7 +133,7 @@ async fn main(_spawner: Spawner) {
         encoder: none_driver!(Encoder),
     };
 
-    rktk::task::start(drivers, keymap::KEYMAP, create_empty_hooks()).await;
+    rktk::task::start(drivers, keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
 }
 
 #[panic_handler]

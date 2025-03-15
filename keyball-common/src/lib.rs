@@ -1,10 +1,10 @@
-//! Common definitions for the Keyball keyboard firmware. Independent of the specific MCU used.
 #![no_std]
 
 pub mod keymap;
 
 pub use keymap::KEYMAP;
 
+use rktk::drivers::interface::keyscan::Hand;
 use rktk_drivers_common::{keyscan::duplex_matrix::ScanDir, mouse::paw3395, usb::UsbDriverConfig};
 
 pub const PAW3395_CONFIG: paw3395::config::Config = paw3395::config::Config {
@@ -25,19 +25,39 @@ pub const USB_CONFIG: UsbDriverConfig = {
     config
 };
 
-// Left
-//    [COL2ROW] [ROW2COL]
-// COL 0 1 2    0 1 2 3
+// メモ: Keyballのキースキャン配線
 //
-//     0 1 2    3 4 5 6
-pub fn translate_key_position(dir: ScanDir, row: usize, col: usize) -> Option<(usize, usize)> {
-    match dir {
-        ScanDir::Col2Row => {
-            if col == 3 {
-                return None;
+// 左                   右
+//
+// 論理 0 1 2 3 4 5 6        0 1 2 3 4 5 6
+// 物理
+//      [C2R] [ R2C ]        [ R2C ] [C2R]
+// COL→ 0 1 2 0 1 2 3   COL→ 3 2 1 0 2 1 0
+// ROW↓                 ROW↓
+// 0                    0
+// 1                    1
+// 2                    2
+// 3                    3
+// 4                    4
+pub fn translate_key_position(
+    hand: Hand,
+) -> impl Fn(ScanDir, usize, usize) -> Option<(usize, usize)> {
+    move |dir: ScanDir, row: usize, col: usize| match (hand, dir) {
+        (Hand::Left, ScanDir::Col2Row) => {
+            if col > 2 {
+                None
+            } else {
+                Some((row, col))
             }
-            Some((row, col))
         }
-        ScanDir::Row2Col => Some((row, col + 3)),
+        (Hand::Left, ScanDir::Row2Col) => Some((row, col + 3)),
+        (Hand::Right, ScanDir::Row2Col) => Some((row, 3 - col)),
+        (Hand::Right, ScanDir::Col2Row) => {
+            if col > 2 {
+                None
+            } else {
+                Some((row, 6 - col))
+            }
+        }
     }
 }
