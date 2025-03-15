@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nazo6/rktk/refs/heads/master/lib/rktk/schema.json",
+  "$schema": "../../rktk/lib/rktk/schema.json",
   "keyboard": {
     "cols": 14,
     "rows": 5,
@@ -169,11 +169,10 @@
       ]
     }
   },
-  "config": {
-    "rktk": {
-      "scan_interval_keyboard": 10,
-      "scan_interval_mouse": 5,
-      "split_usb_timeout": 10000
-    }
+  "rktk": {
+    "scan_interval_keyboard": 10,
+    "scan_interval_mouse": 5,
+    "split_usb_timeout": 10000,
+    "double_tap_threshold": 500
   }
 }

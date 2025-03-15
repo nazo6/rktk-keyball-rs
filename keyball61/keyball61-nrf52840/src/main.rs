@@ -200,6 +200,7 @@ async fn main(_spawner: Spawner) {
         ble_builder,
         debounce: Some(EagerDebounceDriver::new(
             embassy_time::Duration::from_millis(20),
+            true,
         )),
         encoder: none_driver!(Encoder),
     };

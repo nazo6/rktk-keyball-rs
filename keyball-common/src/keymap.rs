@@ -1,6 +1,5 @@
 use rktk::config::keymap::{
-    key_manager::{keycode::prelude::*, keymap::TapDanceDefinition},
-    Keymap, Layer, LayerKeymap,
+    keymanager::keymap::TapDanceDefinition, prelude::*, Keymap, Layer, LayerKeymap,
 };
 
 const L2ENTER: KeyAction = KeyAction::TapHold(
@@ -23,7 +22,7 @@ const L4GRV: KeyAction = KeyAction::TapHold(
     KeyCode::Layer(LayerOp::Momentary(4)),
 );
 
-const FL_CLR: KeyAction = KeyAction::Normal(KeyCode::Special(Special::FlashClear));
+const FL_CLR: KeyAction = FLASH_CLEAR;
 
 #[rustfmt::skip]
 const L0: LayerKeymap = [
@@ -73,27 +72,26 @@ const L4: LayerKeymap = [
 ];
 
 pub const KEYMAP: Keymap = Keymap {
-    encoder_keys: [],
     layers: [
         Layer {
             keymap: L0,
-            arrowmouse: false,
+            ..Layer::const_default()
         },
         Layer {
             keymap: L1,
-            arrowmouse: false,
+            ..Layer::const_default()
         },
         Layer {
             keymap: L2,
-            arrowmouse: false,
+            ..Layer::const_default()
         },
         Layer {
             keymap: L3,
-            arrowmouse: true,
+            ..Layer::const_default()
         },
         Layer {
             keymap: L4,
-            arrowmouse: true,
+            ..Layer::const_default()
         },
     ],
     tap_dance: [

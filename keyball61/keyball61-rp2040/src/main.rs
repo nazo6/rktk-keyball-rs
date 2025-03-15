@@ -69,7 +69,7 @@ async fn main(_spawner: Spawner) {
     let ball_spi = SpiDevice::new(&spi, Output::new(p.PIN_21, embassy_rp::gpio::Level::High));
     let ball = Paw3395Builder::new(ball_spi, PAW3395_CONFIG);
 
-    let keyscan = DuplexMatrixScanner::<_, 5, 4, 5, 7>::new(
+    let keyscan = DuplexMatrixScanner::<_, 5, 4, 7, 5>::new(
         [
             RpFlexPin::new(p.PIN_4),
             RpFlexPin::new(p.PIN_5),
@@ -95,6 +95,7 @@ async fn main(_spawner: Spawner) {
             mouse_poll_interval: 5,
             kb_poll_interval: 5,
             driver,
+            defmt_usb_use_dtr: true,
         };
 
         CommonUsbDriverBuilder::new(usb_opts)

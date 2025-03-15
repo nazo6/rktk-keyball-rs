@@ -35,27 +35,6 @@ embassy-time = { version = "0.4.0" }
 embassy-sync = { version = "0.6.0" }
 embassy-embedded-hal = { version = "0.3.0" }
 
-embassy-rp = { version = "0.3.0", features = [
-  "unstable-pac",
-  "time-driver",
-  "critical-section-impl",
-] }
-
-embassy-nrf = { version = "0.3.0", features = [
-  "gpiote",
-  "time-driver-rtc1",
-  "nrf52840",
-  "nfc-pins-as-gpio",
-  "unstable-pac",
-] }
-nrf-softdevice = { git = "https://github.com/embassy-rs/nrf-softdevice", features = [
-  "ble-peripheral",
-  "ble-central",
-  "critical-section-impl",
-  "s140",
-  "nrf52840",
-] }
-
 cortex-m = { version = "0.7.7", features = ["inline-asm"] }
 cortex-m-rt = { version = "0.7.3" }
 
