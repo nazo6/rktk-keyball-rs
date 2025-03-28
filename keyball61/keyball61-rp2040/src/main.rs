@@ -16,7 +16,7 @@ use embassy_rp::{
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use rktk::{drivers::Drivers, hooks::create_empty_hooks, none_driver};
 use rktk_drivers_common::{
-    display::ssd1306::Ssd1306DisplayBuilder,
+    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306DisplayBuilder},
     keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
     mouse::pmw3360::Pmw3360Builder,
     panic_utils,
@@ -50,7 +50,7 @@ async fn main(_spawner: Spawner) {
             Irqs,
             rktk_drivers_rp::display::ssd1306::recommended_i2c_config(),
         ),
-        ssd1306::size::DisplaySize128x32,
+        DisplaySize128x32,
     );
 
     let Some(display) = panic_utils::display_message_if_panicked(display).await else {
@@ -133,7 +133,7 @@ async fn main(_spawner: Spawner) {
         encoder: none_driver!(Encoder),
     };
 
-    rktk::task::start(drivers, keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
+    rktk::task::start(drivers, &keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
 }
 
 #[panic_handler]

@@ -9,17 +9,17 @@
     {
       "label": "deploy keyball61 rp2040",
       "type": "shell",
-      "command": "rktk-cli build keyball61/keyball61-rp2040 -d auto"
+      "command": "cd keyball61/keyball61-rp2040 && cargo run --release"
     },
     {
       "label": "deploy keyball61 nrf52840 (1.usb)",
       "type": "shell",
-      "command": "rktk-cli build keyball61/keyball61-nrf52840 -d auto -- --no-default-features --features usb"
+      "command": "cd keyball61/keyball61-nrf52840 && cargo run --release --no-default-features --features usb"
     },
     {
       "label": "deploy keyball61 nrf52840 (2.ble)",
       "type": "shell",
-      "command": "rktk-cli build keyball61/keyball61-nrf52840 -d auto -- --no-default-features --features ble"
+      "command": "cd keyball61/keyball61-nrf52840 && cargo run --release --no-default-features --features ble"
     },
     {
       "label": "check all",

@@ -1116,7 +1116,6 @@ dependencies = [
  "rktk",
  "rktk-drivers-common",
  "rktk-drivers-nrf",
- "ssd1306",
 ]
 
 [[package]]
@@ -1136,7 +1135,6 @@ dependencies = [
  "rktk",
  "rktk-drivers-common",
  "rktk-drivers-rp",
- "ssd1306",
 ]
 
 [[package]]
@@ -1195,9 +1193,9 @@ dependencies = [
 
 [[package]]
 name = "log"
-version = "0.4.26"
+version = "0.4.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "30bde2b3dc3671ae49d8e2e9f044c7c005836e7a023ee57cffa25ab82764bb9e"
+checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "macro_rules_attribute"
@@ -1339,9 +1337,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.21.1"
+version = "1.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d75b0bedcc4fe52caa0e03d9f1151a323e4aa5e2d78ba3580400cd3c9e2bc4bc"
+checksum = "c2806eaa3524762875e21c3dcd057bc4b7bfa01ce4da8d46be1cd43649e1cc6b"
 dependencies = [
  "critical-section",
  "portable-atomic",
@@ -1633,7 +1631,7 @@ dependencies = [
 [[package]]
 name = "rktk"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "const-gen",
  "defmt",
@@ -1665,7 +1663,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-common"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "critical-section",
  "defmt",
@@ -1680,7 +1678,6 @@ dependencies = [
  "embedded-hal-async",
  "embedded-storage-async",
  "heapless 0.7.17",
- "maybe-async-cfg",
  "rktk",
  "rktk-log",
  "sequential-storage",
@@ -1692,7 +1689,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-nrf"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "atomic-pool",
  "bitvec",
@@ -1725,7 +1722,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-rp"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "defmt",
  "display-interface",
@@ -1752,7 +1749,7 @@ dependencies = [
 [[package]]
 name = "rktk-keymanager"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "defmt",
  "document-features",
@@ -1769,20 +1766,9 @@ dependencies = [
 [[package]]
 name = "rktk-log"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
+source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
 dependencies = [
  "defmt",
- "rktk-log-macros",
-]
-
-[[package]]
-name = "rktk-log-macros"
-version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#d2d497fcae3270879e82455b61d28102b7392b54"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.100",
 ]
 
 [[package]]
@@ -2037,9 +2023,9 @@ dependencies = [
 
 [[package]]
 name = "ssd1306"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ed51935bdc6e9e976d3d9a747e768589eaea0cf26f483213bfededc947c8624"
+checksum = "3ea6aac2d078bbc71d9b8ac3f657335311f3b6625e9a1a96ccc29f5abfa77c56"
 dependencies = [
  "display-interface",
  "display-interface-i2c",

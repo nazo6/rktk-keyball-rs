@@ -38,8 +38,6 @@ embassy-embedded-hal = { version = "0.3.0" }
 cortex-m = { version = "0.7.7", features = ["inline-asm"] }
 cortex-m-rt = { version = "0.7.3" }
 
-ssd1306 = { version = "0.9.0" }
-
 once_cell = { version = "1.20.2", default-features = false, features = [
   "atomic-polyfill",
 ] }
