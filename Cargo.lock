@@ -1631,7 +1631,7 @@ dependencies = [
 [[package]]
 name = "rktk"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "const-gen",
  "defmt",
@@ -1663,7 +1663,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-common"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "critical-section",
  "defmt",
@@ -1689,7 +1689,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-nrf"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "atomic-pool",
  "bitvec",
@@ -1722,7 +1722,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-rp"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "defmt",
  "display-interface",
@@ -1749,7 +1749,7 @@ dependencies = [
 [[package]]
 name = "rktk-keymanager"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "defmt",
  "document-features",
@@ -1766,7 +1766,7 @@ dependencies = [
 [[package]]
 name = "rktk-log"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#646fed156508463f95a85d569077b0bdc5668529"
+source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
 dependencies = [
  "defmt",
 ]
@@ -2063,9 +2063,9 @@ dependencies = [
 
 [[package]]
 name = "string_cache"
-version = "0.8.8"
+version = "0.8.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "938d512196766101d333398efde81bc1f37b00cb42c2f8350e5df639f040bbbe"
+checksum = "bf776ba3fa74f83bf4b63c3dcbbf82173db2632ed8452cb2d891d33f459de70f"
 dependencies = [
  "new_debug_unreachable",
  "parking_lot",
