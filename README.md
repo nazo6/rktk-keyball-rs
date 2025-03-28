@@ -28,16 +28,10 @@ Proでの動作は現状確認していません。
 
 ビルドには以下のツールが必要です。予めインストールしておいてください。
 
-- Nightly Rust: Rustupからインストール可能
-- [flip-link](https://github.com/knurling-rs/flip-link):
+- Rust (rustupの使用を推奨)
+- [uf2deploy](https://github.com/nazo6/uf2deploy): `cargo install uf2deploy`
+- (オプション) [flip-link](https://github.com/knurling-rs/flip-link):
   `cargo install flip-link`
-- [rktk-cli](https://github.com/nazo6/rktk):
-  `cargo +nightly install --git https://github.com/nazo6/rktk rktk-cli`
-- [cargo-binutils](https://github.com/rust-embedded/cargo-binutils)
-  ```
-  cargo install cargo-binutils
-  rustup component add llvm-tools
-  ```
 
 ### 手順
 
@@ -49,10 +43,11 @@ Proでの動作は現状確認していません。
 2. ビルドするディレクトリに移動してビルドします。
    ```bash
    cd keyball-rs/keyball61/keyball61-rp2040
-   rktk-cli build
+   cargo run --release
    ```
+   この際、デバイスがブートローダモードで接続されていれば自動でUF2ファイルがコピーされます。
 
-3. ビルドが完了すると`target/thumbv6m-none-eabi/min-size`にuf2ファイルが生成されているはずです。ProMicroをブートローダーモードで起動(BOOTを押しながらリセット)し、表れたドライブにuf2ファイルをコピーしてフラッシュしてください。
+   また、UF2ファイルが`target/thumbv6m-none-eabi/release/keyball61-rp2040.uf2`に生成されるため、これを手動でコピーしても構いません。
 
 ## カスタマイズ
 

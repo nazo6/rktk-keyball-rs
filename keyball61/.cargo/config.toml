@@ -1,8 +1,8 @@
 [env]
 RKTK_CONFIG_PATH = { value = "rktk.json", relative = true }
 
-[target.'cfg(all(target_arch = "arm", target_os = "none"))']
-linker = "flip-link"
+# [target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# linker = "flip-link"
 
 [profile.release]
 debug = true
