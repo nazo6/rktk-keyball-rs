@@ -311,12 +311,12 @@ dependencies = [
 
 [[package]]
 name = "darling"
-version = "0.20.10"
+version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f63b86c8a8826a49b8c21f08a2d07338eec8d900540f8630dc76284be802989"
+checksum = "fc7f46116c46ff9ab3eb1597a45688b6715c6e628b5c133e288e709a29bcb4ee"
 dependencies = [
- "darling_core 0.20.10",
- "darling_macro 0.20.10",
+ "darling_core 0.20.11",
+ "darling_macro 0.20.11",
 ]
 
 [[package]]
@@ -335,9 +335,9 @@ dependencies = [
 
 [[package]]
 name = "darling_core"
-version = "0.20.10"
+version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95133861a8032aaea082871032f5815eb9e98cef03fa916ab4500513994df9e5"
+checksum = "0d00b9596d185e565c2207a0b01f8bd1a135483d02d9b7b0a54b11da8d53412e"
 dependencies = [
  "fnv",
  "ident_case",
@@ -360,11 +360,11 @@ dependencies = [
 
 [[package]]
 name = "darling_macro"
-version = "0.20.10"
+version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d336a2a514f6ccccaa3e09b02d41d35330c07ddf03a62165fcec10bb561c7806"
+checksum = "fc34b93ccb385b40dc71c6fceac4b2ad23662c7eeb248cf10d529b7e055b6ead"
 dependencies = [
- "darling_core 0.20.10",
+ "darling_core 0.20.11",
  "quote",
  "syn 2.0.100",
 ]
@@ -422,6 +422,9 @@ name = "display-interface"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ba2aab1ef3793e6f7804162debb5ac5edb93b3d650fbcc5aeb72fcd0e6c03a0"
+dependencies = [
+ "defmt",
+]
 
 [[package]]
 name = "display-interface-i2c"
@@ -492,6 +495,7 @@ checksum = "90327bcc66333a507f89ecc4e2d911b265c45f5c9bc241f98eee076752d35ac6"
 dependencies = [
  "cortex-m",
  "critical-section",
+ "defmt",
  "document-features",
  "embassy-executor-macros",
 ]
@@ -502,7 +506,7 @@ version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3577b1e9446f61381179a330fc5324b01d511624c55f25e3c66c9e3c626dbecf"
 dependencies = [
- "darling 0.20.10",
+ "darling 0.20.11",
  "proc-macro2",
  "quote",
  "syn 2.0.100",
@@ -1337,9 +1341,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.21.2"
+version = "1.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2806eaa3524762875e21c3dcd057bc4b7bfa01ce4da8d46be1cd43649e1cc6b"
+checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 dependencies = [
  "critical-section",
  "portable-atomic",
@@ -1631,7 +1635,7 @@ dependencies = [
 [[package]]
 name = "rktk"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "const-gen",
  "defmt",
@@ -1646,6 +1650,7 @@ dependencies = [
  "heapless 0.7.17",
  "itertools",
  "macro_rules_attribute",
+ "paste",
  "postcard",
  "rktk-keymanager",
  "rktk-log",
@@ -1663,11 +1668,12 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-common"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "critical-section",
  "defmt",
  "display-interface",
+ "document-features",
  "embassy-executor",
  "embassy-futures",
  "embassy-sync",
@@ -1689,7 +1695,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-nrf"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "atomic-pool",
  "bitvec",
@@ -1722,7 +1728,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-rp"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "defmt",
  "display-interface",
@@ -1749,7 +1755,7 @@ dependencies = [
 [[package]]
 name = "rktk-keymanager"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "defmt",
  "document-features",
@@ -1766,7 +1772,7 @@ dependencies = [
 [[package]]
 name = "rktk-log"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#8a7bac544de91b922e6b7d6a987b196f668b5c05"
+source = "git+https://github.com/nazo6/rktk#f58e0a92cb2ba24b7ecbe0f7bfc7a1c4be838939"
 dependencies = [
  "defmt",
 ]
@@ -1949,7 +1955,7 @@ version = "3.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8d00caa5193a3c8362ac2b73be6b9e768aa5a4b2f721d8f4b339600c3cb51f8e"
 dependencies = [
- "darling 0.20.10",
+ "darling 0.20.11",
  "proc-macro2",
  "quote",
  "syn 2.0.100",

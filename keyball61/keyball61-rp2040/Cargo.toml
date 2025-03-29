@@ -38,7 +38,7 @@ default = ["defmt"]
 defmt = [
   "dep:defmt",
   "rktk/defmt",
-  "rktk-drivers-common/defmtusb",
+  "rktk-drivers-common/defmt-usb",
   "rktk-drivers-common/defmt-timestamp",
   "rktk-drivers-rp/defmt",
 ]

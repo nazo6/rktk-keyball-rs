@@ -17,12 +17,15 @@ use embassy_nrf::{
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use once_cell::sync::OnceCell;
 
-use rktk::{drivers::Drivers, hooks::create_empty_hooks, none_driver};
+use rktk::{
+    drivers::{dummy, Drivers},
+    hooks::create_empty_hooks,
+};
 use rktk_drivers_common::{
     debounce::EagerDebounceDriver,
-    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306DisplayBuilder},
+    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306Display},
     keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
-    mouse::pmw3360::Pmw3360Builder,
+    mouse::pmw3360::Pmw3360,
     panic_utils,
 };
 use rktk_drivers_nrf::{
@@ -69,7 +72,7 @@ async fn main(_spawner: Spawner) {
     interrupt::TWISPI0.set_priority(Priority::P2);
     interrupt::UARTE0.set_priority(Priority::P2);
 
-    let display = Ssd1306DisplayBuilder::new(
+    let mut display = Ssd1306Display::new(
         Twim::new(
             p.TWISPI0,
             Irqs,
@@ -80,9 +83,7 @@ async fn main(_spawner: Spawner) {
         DisplaySize128x32,
     );
 
-    let Some(display) = panic_utils::display_message_if_panicked(display).await else {
-        cortex_m::asm::udf()
-    };
+    panic_utils::display_message_if_panicked(&mut display).await;
 
     let spi = Mutex::<NoopRawMutex, _>::new(Spim::new(
         p.SPI2,
@@ -100,7 +101,7 @@ async fn main(_spawner: Spawner) {
             embassy_nrf::gpio::OutputDrive::Standard,
         ),
     );
-    let ball = Pmw3360Builder::new(ball_spi_device);
+    let ball = Pmw3360::new(ball_spi_device);
 
     let hand = detect_hand_from_matrix(
         Output::new(&mut p.P1_00, Level::Low, OutputDrive::Standard),
@@ -172,7 +173,7 @@ async fn main(_spawner: Spawner) {
         ));
 
         #[cfg(not(feature = "ble"))]
-        let ble = none_driver!(BleBuilder);
+        let ble = dummy::ble_builder();
 
         ble
     };
@@ -180,7 +181,7 @@ async fn main(_spawner: Spawner) {
     let drivers = Drivers {
         keyscan,
         system: NrfSystemDriver::new(None),
-        mouse_builder: Some(ball),
+        mouse: Some(ball),
         usb_builder: {
             #[cfg(feature = "usb")]
             let usb = {
@@ -196,11 +197,11 @@ async fn main(_spawner: Spawner) {
             };
 
             #[cfg(not(feature = "usb"))]
-            let usb = none_driver!(UsbBuilder);
+            let usb = dummy::usb_builder();
 
             usb
         },
-        display_builder: Some(display),
+        display: Some(display),
         split: Some(split),
         rgb: Some(rgb),
         storage: Some(storage),
@@ -209,7 +210,7 @@ async fn main(_spawner: Spawner) {
             embassy_time::Duration::from_millis(20),
             true,
         )),
-        encoder: none_driver!(Encoder),
+        encoder: dummy::encoder(),
     };
 
     rktk::task::start(drivers, &keymap::KEYMAP, Some(hand), create_empty_hooks()).await;

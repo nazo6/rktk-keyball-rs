@@ -14,11 +14,14 @@ use embassy_rp::{
 };
 
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
-use rktk::{drivers::Drivers, hooks::create_empty_hooks, none_driver};
+use rktk::{
+    drivers::{dummy, Drivers},
+    hooks::create_empty_hooks,
+};
 use rktk_drivers_common::{
-    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306DisplayBuilder},
+    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306Display},
     keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
-    mouse::pmw3360::Pmw3360Builder,
+    mouse::pmw3360::Pmw3360,
     panic_utils,
     usb::{CommonUsbDriverBuilder, UsbOpts},
 };
@@ -42,7 +45,7 @@ async fn main(_spawner: Spawner) {
     cfg.clocks.sys_clk.div_int = 2;
     let mut p = embassy_rp::init(cfg);
 
-    let display = Ssd1306DisplayBuilder::new(
+    let mut display = Ssd1306Display::new(
         I2c::new_async(
             p.I2C1,
             p.PIN_3,
@@ -53,9 +56,7 @@ async fn main(_spawner: Spawner) {
         DisplaySize128x32,
     );
 
-    let Some(display) = panic_utils::display_message_if_panicked(display).await else {
-        cortex_m::asm::udf()
-    };
+    panic_utils::display_message_if_panicked(&mut display).await;
 
     let spi = Mutex::<NoopRawMutex, _>::new(embassy_rp::spi::Spi::new(
         p.SPI0,
@@ -67,7 +68,7 @@ async fn main(_spawner: Spawner) {
         pmw3360::recommended_spi_config(),
     ));
     let ball_spi = SpiDevice::new(&spi, Output::new(p.PIN_21, embassy_rp::gpio::Level::High));
-    let ball = Pmw3360Builder::new(ball_spi);
+    let ball = Pmw3360::new(ball_spi);
 
     let hand = detect_hand_from_matrix(
         Output::new(&mut p.PIN_6, Level::Low),
@@ -122,15 +123,15 @@ async fn main(_spawner: Spawner) {
     let drivers = Drivers {
         keyscan,
         system: rktk_drivers_rp::system::RpSystemDriver,
-        mouse_builder: Some(ball),
+        mouse: Some(ball),
         usb_builder: Some(usb),
-        display_builder: Some(display),
+        display: Some(display),
         split: Some(split),
         rgb: Some(rgb),
-        ble_builder: none_driver!(BleBuilder),
+        ble_builder: dummy::ble_builder(),
         storage: Some(storage),
-        debounce: none_driver!(Debounce),
-        encoder: none_driver!(Encoder),
+        debounce: dummy::debounce(),
+        encoder: dummy::encoder(),
     };
 
     rktk::task::start(drivers, &keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
