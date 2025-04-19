@@ -1867,7 +1867,7 @@ dependencies = [
 [[package]]
 name = "rktk"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "const-gen",
  "defmt 1.0.1",
@@ -1901,7 +1901,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-common"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "critical-section",
  "defmt 1.0.1",
@@ -1928,7 +1928,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-nrf"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "atomic-pool",
  "bitvec",
@@ -1960,7 +1960,7 @@ dependencies = [
 [[package]]
 name = "rktk-drivers-rp"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "defmt 1.0.1",
  "display-interface",
@@ -1986,7 +1986,7 @@ dependencies = [
 [[package]]
 name = "rktk-keymanager"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "defmt 1.0.1",
  "document-features",
@@ -2003,7 +2003,7 @@ dependencies = [
 [[package]]
 name = "rktk-log"
 version = "0.1.0"
-source = "git+https://github.com/nazo6/rktk#be65b48204a44fe53921c18aec779b12a766dd6a"
+source = "git+https://github.com/nazo6/rktk#f40124703e8c74e4be893117b2fbc110800a6ac1"
 dependencies = [
  "defmt 1.0.1",
 ]

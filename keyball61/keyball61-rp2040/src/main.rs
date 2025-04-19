@@ -110,9 +110,6 @@ async fn main(_spawner: Spawner) {
     let pio = Pio::new(p.PIO1, Irqs);
     let rgb = Ws2812Pio::new(pio, p.PIN_0, p.DMA_CH2);
 
-    // NOTE: needed for some macro thing. maybe this can be avoided.
-    #[allow(clippy::needless_late_init)]
-    let storage;
     rktk_drivers_rp::init_storage!(storage, p.FLASH, p.DMA_CH3, { 4 * 1024 * 1024 });
 
     let drivers = Drivers {

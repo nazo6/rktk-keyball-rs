@@ -49,7 +49,7 @@ rktk-drivers-nrf = { git = 'https://github.com/nazo6/rktk' }
 rktk-drivers-rp = { git = 'https://github.com/nazo6/rktk' }
 
 # [patch.crates-io]
-# rktk = { path = "../rktk/lib/rktk" }
-# rktk-drivers-common = { path = "../rktk/lib/rktk-drivers-common" }
-# rktk-drivers-nrf = { path = "../rktk/lib/rktk-drivers-nrf" }
-# rktk-drivers-rp = { path = "../rktk/lib/rktk-drivers-rp" }
+# rktk = { path = "../../rktk/lib/rktk" }
+# rktk-drivers-common = { path = "../../rktk/lib/rktk-drivers-common" }
+# rktk-drivers-nrf = { path = "../../rktk/lib/rktk-drivers-nrf" }
+# rktk-drivers-rp = { path = "../../rktk/lib/rktk-drivers-rp" }
