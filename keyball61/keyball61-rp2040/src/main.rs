@@ -23,7 +23,7 @@ use rktk_drivers_common::{
     keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
     mouse::pmw3360::Pmw3360,
     panic_utils,
-    usb::{CommonUsbDriverBuilder, UsbOpts},
+    usb::*,
 };
 use rktk_drivers_rp::{
     keyscan::flex_pin::RpFlexPin, mouse::pmw3360, rgb::ws2812_pio::Ws2812Pio,
@@ -97,16 +97,11 @@ async fn main(_spawner: Spawner) {
     );
 
     let usb = {
-        let driver = embassy_rp::usb::Driver::new(p.USB, Irqs);
-        let usb_opts = UsbOpts {
-            config: USB_CONFIG,
-            mouse_poll_interval: 5,
-            kb_poll_interval: 5,
-            driver,
-            defmt_usb_use_dtr: true,
-        };
-
-        CommonUsbDriverBuilder::new(usb_opts)
+        let embassy_driver = embassy_rp::usb::Driver::new(p.USB, Irqs);
+        let mut driver_config = UsbDriverConfig::new(0xc0de, 0xcafe);
+        driver_config.product = Some("Keyball61");
+        let opts = CommonUsbDriverConfig::new(embassy_driver, driver_config);
+        Some(CommonUsbReporterBuilder::new(opts))
     };
 
     let pio = Pio::new(p.PIO0, Irqs);
@@ -124,7 +119,7 @@ async fn main(_spawner: Spawner) {
         keyscan,
         system: rktk_drivers_rp::system::RpSystemDriver,
         mouse: Some(ball),
-        usb_builder: Some(usb),
+        usb_builder: usb,
         display: Some(display),
         split: Some(split),
         rgb: Some(rgb),

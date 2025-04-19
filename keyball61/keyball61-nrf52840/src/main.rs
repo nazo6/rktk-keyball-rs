@@ -40,13 +40,12 @@ use nrf_softdevice as _;
 #[cfg(feature = "ble")]
 mod ble {
     pub use rktk_drivers_nrf::softdevice::ble::init_ble_server;
-    pub use rktk_drivers_nrf::softdevice::ble::NrfBleDriverBuilder;
+    pub use rktk_drivers_nrf::softdevice::ble::SoftdeviceBleReporterBuilder;
 }
 
 #[cfg(feature = "usb")]
 mod usb {
-    pub use rktk_drivers_common::usb::CommonUsbDriverBuilder;
-    pub use rktk_drivers_common::usb::UsbOpts;
+    pub use rktk_drivers_common::usb::*;
 }
 
 use embassy_nrf::{bind_interrupts, peripherals::USBD};
@@ -165,7 +164,7 @@ async fn main(_spawner: Spawner) {
 
     let ble_builder = {
         #[cfg(feature = "ble")]
-        let ble = Some(ble::NrfBleDriverBuilder::new(
+        let ble = Some(ble::SoftdeviceBleReporterBuilder::new(
             sd,
             server,
             "keyball61",
@@ -186,14 +185,11 @@ async fn main(_spawner: Spawner) {
             #[cfg(feature = "usb")]
             let usb = {
                 let vbus = SOFTWARE_VBUS.get_or_init(|| SoftwareVbusDetect::new(true, true));
-                let driver = embassy_nrf::usb::Driver::new(p.USBD, Irqs, vbus);
-                let opts = usb::UsbOpts {
-                    config: USB_CONFIG,
-                    mouse_poll_interval: 2,
-                    kb_poll_interval: 5,
-                    driver,
-                };
-                Some(usb::CommonUsbDriverBuilder::new(opts))
+                let embassy_driver = embassy_nrf::usb::Driver::new(p.USBD, Irqs, vbus);
+                let mut driver_config = usb::UsbDriverConfig::new(0xc0de, 0xcafe);
+                driver_config.product = Some("Keyball61");
+                let opts = usb::CommonUsbDriverConfig::new(embassy_driver, driver_config);
+                Some(usb::CommonUsbReporterBuilder::new(opts))
             };
 
             #[cfg(not(feature = "usb"))]

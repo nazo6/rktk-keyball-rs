@@ -6,6 +6,7 @@
     "file",
     "-s",
     "clippy",
-    "--message-format=json"
+    "--message-format=json",
+    "--all-features"
   ]
 }
