@@ -15,11 +15,12 @@ use embassy_rp::{
 
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use rktk::{
+    config::new_rktk_opts,
     drivers::{dummy, Drivers},
     hooks::create_empty_hooks,
 };
 use rktk_drivers_common::{
-    display::ssd1306::{prelude::DisplaySize128x32, Ssd1306Display},
+    display::ssd1306::{self, Ssd1306Driver},
     keyscan::{detect_hand_from_matrix, duplex_matrix::DuplexMatrixScanner},
     mouse::pmw3360::Pmw3360,
     panic_utils,
@@ -45,7 +46,7 @@ async fn main(_spawner: Spawner) {
     cfg.clocks.sys_clk.div_int = 2;
     let mut p = embassy_rp::init(cfg);
 
-    let mut display = Ssd1306Display::new(
+    let mut display = Ssd1306Driver::new(
         I2c::new_async(
             p.I2C1,
             p.PIN_3,
@@ -53,7 +54,8 @@ async fn main(_spawner: Spawner) {
             Irqs,
             rktk_drivers_rp::display::ssd1306::recommended_i2c_config(),
         ),
-        DisplaySize128x32,
+        ssd1306::prelude::DisplaySize128x32,
+        ssd1306::prelude::DisplayRotation::Rotate90,
     );
 
     panic_utils::display_message_if_panicked(&mut display).await;
@@ -126,7 +128,12 @@ async fn main(_spawner: Spawner) {
         encoder: dummy::encoder(),
     };
 
-    rktk::task::start(drivers, &keymap::KEYMAP, Some(hand), create_empty_hooks()).await;
+    rktk::task::start(
+        drivers,
+        create_empty_hooks(),
+        new_rktk_opts(&keymap::KEYMAP, Some(hand)),
+    )
+    .await;
 }
 
 #[panic_handler]

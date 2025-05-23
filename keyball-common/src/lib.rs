@@ -4,7 +4,7 @@ pub mod keymap;
 
 pub use keymap::KEYMAP;
 
-use rktk::interface::Hand;
+use rktk::config::Hand;
 use rktk_drivers_common::{keyscan::duplex_matrix::ScanDir, mouse::paw3395, usb::UsbDriverConfig};
 
 pub const PAW3395_CONFIG: paw3395::config::Config = paw3395::config::Config {
