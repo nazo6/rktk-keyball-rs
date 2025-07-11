@@ -15,7 +15,6 @@ use embassy_rp::{
 
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use rktk::{
-    config::new_rktk_opts,
     drivers::{dummy, Drivers},
     hooks::create_empty_hooks,
 };
@@ -128,12 +127,14 @@ async fn main(_spawner: Spawner) {
         encoder: dummy::encoder(),
     };
 
-    rktk::task::start(
-        drivers,
-        create_empty_hooks(),
-        new_rktk_opts(&keymap::KEYMAP, Some(hand)),
-    )
-    .await;
+    match hand {
+        rktk::config::Hand::Left => {
+            rktk::task::start(drivers, create_empty_hooks(), get_opts_left()).await;
+        }
+        rktk::config::Hand::Right => {
+            rktk::task::start(drivers, create_empty_hooks(), get_opts_right()).await;
+        }
+    }
 }
 
 #[panic_handler]

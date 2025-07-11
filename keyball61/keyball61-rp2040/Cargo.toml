@@ -9,7 +9,7 @@ repository.workspace = true
 [dependencies]
 keyball-common = { workspace = true }
 
-rktk = { workspace = true }
+rktk = { workspace = true, features = ["rrp"] }
 rktk-drivers-rp = { workspace = true }
 rktk-drivers-common = { workspace = true }
 
