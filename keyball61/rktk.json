@@ -1,11 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nazo6/rktk/refs/tags/v0.2.0/lib/rktk/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nazo6/rktk/refs/heads/master/lib/rktk/schema.json",
   "constant": {
     "keyboard": {
       "cols": 14,
-      "rows": 5,
-      "right_rgb_count": 34,
-      "left_rgb_count": 37
+      "rows": 5
     }
   },
   "dynamic": {

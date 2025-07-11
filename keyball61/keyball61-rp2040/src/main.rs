@@ -110,7 +110,7 @@ async fn main(_spawner: Spawner) {
     let split = PioHalfDuplexSplitDriver::new(pio, p.PIN_1);
 
     let pio = Pio::new(p.PIO1, Irqs);
-    let rgb = Ws2812Pio::new(pio, p.PIN_0, p.DMA_CH2);
+    let rgb = Ws2812Pio::<'_, 30, _>::new(pio, p.PIN_0, p.DMA_CH2);
 
     rktk_drivers_rp::init_storage!(storage, p.FLASH, p.DMA_CH3, { 4 * 1024 * 1024 });
 

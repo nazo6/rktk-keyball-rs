@@ -43,13 +43,7 @@ once_cell = { version = "1.20.2", default-features = false, features = [
 ] }
 
 [patch.crates-io]
-rktk = { git = 'https://github.com/nazo6/rktk', tag = "v0.2.0" }
-rktk-drivers-common = { git = 'https://github.com/nazo6/rktk', tag = "v0.2.0" }
-rktk-drivers-nrf = { git = 'https://github.com/nazo6/rktk', tag = "v0.2.0" }
-rktk-drivers-rp = { git = 'https://github.com/nazo6/rktk', tag = "v0.2.0" }
-
-# [patch.crates-io]
-# rktk = { path = "../../rktk/lib/rktk" }
-# rktk-drivers-common = { path = "../../rktk/lib/rktk-drivers-common" }
-# rktk-drivers-nrf = { path = "../../rktk/lib/rktk-drivers-nrf" }
-# rktk-drivers-rp = { path = "../../rktk/lib/rktk-drivers-rp" }
+rktk = { path = "../../rktk/lib/rktk" }
+rktk-drivers-common = { path = "../../rktk/lib/rktk-drivers-common" }
+rktk-drivers-nrf = { path = "../../rktk/lib/rktk-drivers-nrf" }
+rktk-drivers-rp = { path = "../../rktk/lib/rktk-drivers-rp" }
